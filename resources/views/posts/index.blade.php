@@ -18,9 +18,24 @@
     @foreach($posts as $post)
     <div class="card mt-3">
         <div class="card-body">
-            <h5 class="card-title">{{ $post->title }}</h5>
-            <p class="card-text">{{ $post->content }}</p>
-            <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-warning">Edit</a>
+            <div class="card shadow-sm p-3 mb-3 bg-light">
+                <h4 class="fw-bold">{{ $post->title }}</h4>
+                <p class="text-secondary">{{ $post->content }}</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-warning btn-sm">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+            
+                <form action="{{ route('posts.delete', $post->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </button>
+                </form>
+            </div>
+            
         </div>
     </div>
     @endforeach
